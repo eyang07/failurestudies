@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.venv/
+__pycache__/
+.lake/
+cases/*/source_files/
+local-only/
