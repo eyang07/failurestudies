@@ -1,0 +1,222 @@
+{
+  "repository_commit": "97f1b7be82380733fb0380973c164e40645ae9da",
+  "source_url": "https://raw.githubusercontent.com/Huawei-AI4Math/ProofFlow/97f1b7be82380733fb0380973c164e40645ae9da/data/benchmark_0409.json",
+  "git_blob_sha1": "685c69c960082481e65f52dab73124c66cdc29bf",
+  "records": [
+    {
+      "origin": "dummy",
+      "id": 6,
+      "nl_theorem": "If $n$ is an odd integer, then $n^2 \\equiv 1 \\pmod{8}$.",
+      "nl_proof": "Since $n$ is odd, we can write $n = 2k + 1$ for some integer $k$. Then $n^2 = (2k + 1)^2 = 4k^2 + 4k + 1$. We can factor this as $n^2 = 4k(k + 1) + 1$. Now, either $k$ is even or $k$ is odd. If $k$ is even, then $k + 1$ is odd, and if $k$ is odd, then $k + 1$ is even. In either case, $k(k + 1)$ is even, so $k(k + 1) = 2m$ for some integer $m$. Therefore $n^2 = 4(2m) + 1 = 8m + 1$, which means $n^2 \\equiv 1 \\pmod{8}$.",
+      "proof_graph": [
+        {
+          "id": "tc_1",
+          "natural_language": "If $n$ is an odd integer",
+          "statement": "Premise:\n• $n$ is an odd integer [tc_1].",
+          "dependencies": []
+        },
+        {
+          "id": "l1",
+          "natural_language": "Since $n$ is odd, we can write $n = 2k + 1$ for some integer $k$.",
+          "statement": "We assume:\n• $n$ is an odd integer [tc_1].\nTherefore, we conclude:\n• There exists an integer $k$ such that $n = 2k + 1$ [l1].",
+          "dependencies": [
+            "tc_1"
+          ],
+          "lean_hint": "Unfold the definition of an odd number, which states that an odd number can be expressed as 2k+1 for some integer k."
+        },
+        {
+          "id": "l2",
+          "natural_language": "Then $n^2 = (2k + 1)^2 = 4k^2 + 4k + 1$. We can factor this as $n^2 = 4k(k + 1) + 1$.",
+          "statement": "We assume:\n• There exists an integer $k$ such that $n = 2k + 1$ [l1].\nTherefore, we conclude:\n• For the integer $k$ from [l1], $n^2 = 4k(k + 1) + 1$ [l2].",
+          "dependencies": [
+            "l1"
+          ],
+          "lean_hint": "Substitute the expression for n from l1 into n^2 and use algebraic simplification. `rw [l1]`, followed by `ring` should solve this."
+        },
+        {
+          "id": "l3",
+          "natural_language": "Now, either $k$ is even or $k$ is odd.",
+          "statement": "We assume:\n• $k$ is an integer (from the existence established in [l1]).\nTherefore, we conclude:\n• $k$ is either even or odd [l3].",
+          "dependencies": [
+            "l1"
+          ],
+          "lean_hint": "This is a standard property of integers. Use a library lemma such as `Int.even_or_odd k` or case analysis on `k % 2`."
+        },
+        {
+          "id": "l4",
+          "natural_language": "If $k$ is even, then $k + 1$ is odd, and if $k$ is odd, then $k + 1$ is even. In either case, $k(k + 1)$ is even, so $k(k + 1) = 2m$ for some integer $m$.",
+          "statement": "We assume:\n• $k$ is an integer (from [l1]).\n• $k$ is either even or odd [l3].\nTherefore, we conclude:\n• The product $k(k+1)$ is even, meaning there exists an integer $m$ such that $k(k+1) = 2m$ [l4].",
+          "dependencies": [
+            "l1",
+            "l3"
+          ],
+          "lean_hint": "Perform a case split on [l3]. In each case (k is even, k is odd), show that the product k(k+1) is a multiple of 2. A library lemma for `even (k * (k+1))` might also exist."
+        },
+        {
+          "id": "l5",
+          "natural_language": "Therefore $n^2 = 4(2m) + 1 = 8m + 1$,",
+          "statement": "We assume:\n• For an integer $k$, $n^2 = 4k(k + 1) + 1$ [l2].\n• For the same integer $k$, there exists an integer $m$ such that $k(k+1) = 2m$ [l4].\nTherefore, we conclude:\n• There exists an integer $m$ such that $n^2 = 8m + 1$ [l5].",
+          "dependencies": [
+            "l2",
+            "l4"
+          ],
+          "lean_hint": "Substitute the expression for k(k+1) from l4 into the equation for n^2 from l2. `rw [l4] at l2` and then `ring`."
+        },
+        {
+          "id": "ts_1",
+          "natural_language": "which means $n^2 \\equiv 1 \\pmod{8}$.",
+          "statement": "We assume:\n• There exists an integer $m$ such that $n^2 = 8m + 1$ [l5].\nTherefore, we conclude:\n• $n^2 \\equiv 1 \\pmod{8}$ [ts_1].",
+          "dependencies": [
+            "l5"
+          ],
+          "lean_hint": "This follows directly from the definition of modular congruence. Since $n^2 - 1 = 8m$, it means 8 divides $n^2 - 1$. `rw [l5]` and use the definition of `Int.ModEq`."
+        }
+      ]
+    },
+    {
+      "origin": "dummy",
+      "id": 7,
+      "nl_theorem": "If $P(A) = 0.6$ and $P(B) = 0.7$, then $P(A \\cap B) \\geq 0.3",
+      "nl_proof": "We know that $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$. Since $P(A \\cup B) \\leq 1$, we have $P(A) + P(B) - P(A \\cap B) \\leq 1$. Substituting the given values: $0.6 + 0.7 - P(A \\cap B) \\leq 1$, which gives $1.3 - P(A \\cap B) \\leq 1$. Therefore $P(A \\cap B) \\geq 0.3$.",
+      "proof_graph": [
+        {
+          "id": "tc_1",
+          "natural_language": "If $P(A) = 0.6$ and $P(B) = 0.7$",
+          "statement": "Premise:\n• A and B are events in a probability space, with P(A) = 0.6 and P(B) = 0.7 [tc_1].",
+          "dependencies": []
+        },
+        {
+          "id": "l1",
+          "natural_language": "We know that $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+          "statement": "We assume:\n• A and B are any two events in a probability space.\nTherefore, we conclude:\n• P(A ∪ B) = P(A) + P(B) - P(A ∩ B) [l1].",
+          "dependencies": [],
+          "lean_hint": "Use the Principle of Inclusion-Exclusion for two events, e.g., `ProbabilityTheory.prob_union`."
+        },
+        {
+          "id": "l2",
+          "natural_language": "Since $P(A \\cup B) \\leq 1$",
+          "statement": "We assume:\n• A and B are any two events in a probability space.\nTherefore, we conclude:\n• P(A ∪ B) ≤ 1 [l2].",
+          "dependencies": [],
+          "lean_hint": "Use the axiom that the probability of any event is at most 1, e.g., `ProbabilityTheory.prob_le_one`."
+        },
+        {
+          "id": "l3",
+          "natural_language": "we have $P(A) + P(B) - P(A \\cap B) \\leq 1$.",
+          "statement": "We assume:\n• For any two events A and B, P(A ∪ B) = P(A) + P(B) - P(A ∩ B) [l1].\n• For any two events A and B, P(A ∪ B) ≤ 1 [l2].\nTherefore, we conclude:\n• P(A) + P(B) - P(A ∩ B) ≤ 1 [l3].",
+          "dependencies": [
+            "l1",
+            "l2"
+          ],
+          "lean_hint": "Substitute the expression for P(A ∪ B) from l1 into the inequality l2."
+        },
+        {
+          "id": "l4",
+          "natural_language": "Substituting the given values: $0.6 + 0.7 - P(A \\cap B) \\leq 1$",
+          "statement": "We assume:\n• P(A) = 0.6 and P(B) = 0.7 [tc_1].\n• P(A) + P(B) - P(A ∩ B) ≤ 1 [l3].\nTherefore, we conclude:\n• 0.6 + 0.7 - P(A ∩ B) ≤ 1 [l4].",
+          "dependencies": [
+            "tc_1",
+            "l3"
+          ],
+          "lean_hint": "Rewrite l3 using the specific values for P(A) and P(B) from tc_1."
+        },
+        {
+          "id": "l5",
+          "natural_language": "which gives $1.3 - P(A \\cap B) \\leq 1$.",
+          "statement": "We assume:\n• 0.6 + 0.7 - P(A ∩ B) ≤ 1 [l4].\nTherefore, we conclude:\n• 1.3 - P(A ∩ B) ≤ 1 [l5].",
+          "dependencies": [
+            "l4"
+          ],
+          "lean_hint": "Perform the addition 0.6 + 0.7. `norm_num` should solve this."
+        },
+        {
+          "id": "ts_1",
+          "natural_language": "Therefore $P(A \\cap B) \\geq 0.3$.",
+          "statement": "We assume:\n• 1.3 - P(A ∩ B) ≤ 1 [l5].\nTherefore, we conclude:\n• P(A ∩ B) ≥ 0.3 [ts_1].",
+          "dependencies": [
+            "l5"
+          ],
+          "lean_hint": "Rearrange the inequality. The `linarith` tactic should solve this."
+        }
+      ]
+    },
+    {
+      "origin": "dummy",
+      "id": 9,
+      "nl_theorem": "If $(a_n)$ is an arithmetic sequence with $a_1 = 5$ and $a_3 = 11$, then $a_5 = 17$.",
+      "nl_proof": "Since $(a_n)$ is arithmetic, there exists a common difference $d$ such that $a_n = a_1 + (n-1)d$ for all $n$. From the given information, $a_3 = a_1 + 2d$. Substituting the values: $11 = 5 + 2d$, which gives us $2d = 6$, so $d = 3$. Now we can find $a_5 = a_1 + 4d = 5 + 4(3) = 5 + 12 = 17$",
+      "proof_graph": [
+        {
+          "id": "tc_1",
+          "natural_language": "Since $(a_n)$ is arithmetic, there exists a common difference $d$ such that $a_n = a_1 + (n-1)d$ for all $n$.",
+          "statement": "Premise:\n• $(a_n)$ is an arithmetic sequence, which means there exists a common difference $d$ such that $a_n = a_1 + (n-1)d$ for all integers $n \\ge 1$ [tc_1].",
+          "dependencies": []
+        },
+        {
+          "id": "tc_2",
+          "natural_language": "If $(a_n)$ is an arithmetic sequence with $a_1 = 5$ and $a_3 = 11$",
+          "statement": "Premise:\n• For the arithmetic sequence $(a_n)$ defined in [tc_1], we are given that $a_1 = 5$ and $a_3 = 11$ [tc_2].",
+          "dependencies": [
+            "tc_1"
+          ]
+        },
+        {
+          "id": "l1",
+          "natural_language": "From the given information, $a_3 = a_1 + 2d$.",
+          "statement": "We assume:\n• $(a_n)$ is an arithmetic sequence with the formula $a_n = a_1 + (n-1)d$ for a common difference $d$ [tc_1].\nTherefore, we conclude:\n• For $n=3$, the formula yields $a_3 = a_1 + (3-1)d = a_1 + 2d$ [l1].",
+          "dependencies": [
+            "tc_1"
+          ],
+          "lean_hint": "Instantiate the general formula for an arithmetic sequence from tc_1 with n=3."
+        },
+        {
+          "id": "l2",
+          "natural_language": "Substituting the values: $11 = 5 + 2d$",
+          "statement": "We assume:\n• $a_1 = 5$ and $a_3 = 11$ [tc_2].\n• $a_3 = a_1 + 2d$ [l1].\nTherefore, we conclude:\n• $11 = 5 + 2d$ [l2].",
+          "dependencies": [
+            "tc_2",
+            "l1"
+          ],
+          "lean_hint": "Substitute the given values for a_1 and a_3 from tc_2 into the equation from l1."
+        },
+        {
+          "id": "l3",
+          "natural_language": "which gives us $2d = 6$",
+          "statement": "We assume:\n• $11 = 5 + 2d$ [l2].\nTherefore, we conclude:\n• $2d = 6$ [l3].",
+          "dependencies": [
+            "l2"
+          ],
+          "lean_hint": "Subtract 5 from both sides of the equation in l2. The `linarith` tactic can solve this."
+        },
+        {
+          "id": "l4",
+          "natural_language": "so $d = 3$.",
+          "statement": "We assume:\n• $2d = 6$ [l3].\nTherefore, we conclude:\n• $d = 3$ [l4].",
+          "dependencies": [
+            "l3"
+          ],
+          "lean_hint": "Divide both sides of the equation in l3 by 2."
+        },
+        {
+          "id": "l5",
+          "natural_language": "Now we can find $a_5 = a_1 + 4d$",
+          "statement": "We assume:\n• $(a_n)$ is an arithmetic sequence with the formula $a_n = a_1 + (n-1)d$ for a common difference $d$ [tc_1].\nTherefore, we conclude:\n• For $n=5$, the formula yields $a_5 = a_1 + (5-1)d = a_1 + 4d$ [l5].",
+          "dependencies": [
+            "tc_1"
+          ],
+          "lean_hint": "Instantiate the general formula for an arithmetic sequence from tc_1 with n=5."
+        },
+        {
+          "id": "ts_1",
+          "natural_language": "$a_5 = a_1 + 4d = 5 + 4(3) = 5 + 12 = 17$.",
+          "statement": "We assume:\n• $a_1 = 5$ [tc_2].\n• The common difference is $d=3$ [l4].\n• The formula for the 5th term is $a_5 = a_1 + 4d$ [l5].\nTherefore, we conclude:\n• $a_5 = 17$ [ts_1].",
+          "dependencies": [
+            "tc_2",
+            "l4",
+            "l5"
+          ],
+          "lean_hint": "Substitute the values of a_1 from tc_2 and d from l4 into the equation from l5, then compute the result. The `norm_num` tactic is suitable for this."
+        }
+      ]
+    }
+  ]
+}

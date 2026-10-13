@@ -1,0 +1,222 @@
+{
+  "paper_id": "proofflow",
+  "paper_title": "ProofFlow: A Dependency Graph Approach to Faithful Proof Autoformalization",
+  "paper_url": "https://arxiv.org/pdf/2510.15981",
+  "paper_version": "arXiv:2510.15981v1, submitted 2025-10-13 10:20:11 UTC",
+  "collector": "/root/collect_proofflow",
+  "retrieved_at": "2026-10-12",
+  "coverage_notes": "Bounded archival collection: inspected Figure 2, Appendix A.5.1-A.5.3, relevant Section 6 methods, and selected released HTML node records. Four records cover three mathematical families: two candidate content mistranslations and two local comparison records where published dependency claims were not matched to the inspected released endpoints. Selection is outcome-aware and supports no prevalence estimate. The Git tree and record paths are pinned to commit 97f1b7be82380733fb0380973c164e40645ae9da. Repository text supplies exact mathematics; no reconstruction from ambiguous PDF diagram labels is used.",
+  "limitations": [
+    "No experiments, model calls, Lean execution, proof repairs, new formalizations, or independent proof-completeness/dependency-closure verification were performed.",
+    "Exact original per-call prompts, full generation/repair histories, model revisions, mathlib commit, and linkage between paper figures and saved exports are missing from the inspected HTML evidence. Pickle files exist in the repository but were not deserialized or executed.",
+    "All compiler outcomes are publisher-recorded booleans and error text. Sorry scaffold acceptance is kept separate from successful tactic completion.",
+    "Four records represent three proof families, with CASE-0102 and CASE-0104 sharing PF-dummy_9. Comparisons are local, not whole-proof successes.",
+    "No full copyrighted PDF or whole repository was archived. Selected MIT-licensed source/code/data fields are preserved with attribution and the repository license notice.",
+    "Paper diagram typography/OCR is not treated as exact mathematical input. The exact dataset strings include the unmatched dollar delimiter in dummy_7.",
+    "The two dependency comparisons are unresolved provenance discrepancies, not evidence that the paper's claims are false."
+  ],
+  "cases": [
+    {
+      "input_kind": "original",
+      "source_validity": "valid",
+      "source_text_status": "exact_transcription",
+      "published_output_status": "excerpt",
+      "license_notes": "Repository excerpts: MIT License, Copyright (c) 2024 ProofFlow Team; notice retained in MIT-LICENSE.txt. Paper: Rafael Cabral, Tuan Manh Do, Xuejun Yu, Wai Ming Tai, Zijin Feng, Xin Shen, arXiv:2510.15981v1, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Paper summaries are collector paraphrases. Exact source fields and Lean snippets are copied from the pinned repository without corrections.",
+      "original_prompt_status": "unavailable",
+      "original_prompt": "unknown",
+      "reported_environment": "Paper Section 6.1 reports Lean v4.15.0 via LeanServer. Mathlib commit and environment identity for these HTML exports are unknown. Repository commit is 97f1b7be82380733fb0380973c164e40645ae9da. No local compilation or proof-completeness audit was performed.",
+      "reproduction_readiness": "needs_context",
+      "case_id": "CASE-0101",
+      "proof_family_id": "PF-dummy_6",
+      "source_locator": "arXiv:2510.15981v1, Figure 2(b), p. 4; Appendix A.5.1 and Figure 7, pp. 15-17. Repository data/benchmark_0409.json record origin=dummy,id=6; benchmark_results/output_pickle/benckmark6%20-%20think%20noDAG/dummy_6.json.pickle.html and benchmark_results/output_pickle/benckmark5%20-%20no%20think%20noDAG/dummy_6.json.pickle.html, nodeInfo.l3.solved_lemma.",
+      "topic": "Integer parity and modular arithmetic",
+      "case_kind": "comparison_nonfailure",
+      "task_type": "proof_translation",
+      "source_validity_basis": "Statement and informal proof are mathematically valid under standard integer arithmetic; collector inspected the odd-number substitution, expansion, parity of consecutive factors, and divisibility conclusion. This is mathematical inspection, not independent Lean verification.",
+      "source_text": "Theorem (exact nl_theorem field):\nIf $n$ is an odd integer, then $n^2 \\equiv 1 \\pmod{8}$.\n\nProof (exact nl_proof field):\nSince $n$ is odd, we can write $n = 2k + 1$ for some integer $k$. Then $n^2 = (2k + 1)^2 = 4k^2 + 4k + 1$. We can factor this as $n^2 = 4k(k + 1) + 1$. Now, either $k$ is even or $k$ is odd. If $k$ is even, then $k + 1$ is odd, and if $k$ is odd, then $k + 1$ is even. In either case, $k(k + 1)$ is even, so $k(k + 1) = 2m$ for some integer $m$. Therefore $n^2 = 4(2m) + 1 = 8m + 1$, which means $n^2 \\equiv 1 \\pmod{8}$.",
+      "published_output": "Exact released thinking noDAG l3.solved_lemma.lean_code:\nimport Mathlib\nimport Aesop\nset_option maxHeartbeats 0\nopen BigOperators Real Nat Topology Rat Filter\n\ntheorem l3\n  (n : ℤ) (k : ℤ)\n  (tc_1 : Odd n)\n  (l1 : n = 2 * k + 1)\n  (l2 : n^2 = 4 * k^2 + 4 * k + 1) :\n  n^2 = 4 * k * (k + 1) + 1 := by\n  have h_main : 4 * k^2 + 4 * k + 1 = 4 * k * (k + 1) + 1 := by\n    have h₀ : 4 * k * (k + 1) = 4 * k ^ 2 + 4 * k := by\n      ring\n    linarith\n  \n  have h_final : n^2 = 4 * k * (k + 1) + 1 := by\n    have h₁ : n ^ 2 = 4 * k ^ 2 + 4 * k + 1 := l2\n    have h₂ : 4 * k ^ 2 + 4 * k + 1 = 4 * k * (k + 1) + 1 := h_main\n    linarith\n  \n  exact h_final\n\nExact released non-thinking noDAG l3.solved_lemma.lean_code:\nimport Mathlib\nimport Aesop\n\nset_option maxHeartbeats 0\n\nopen BigOperators Real Nat Topology Rat Filter\n\nlemma l3\n  (n : ℤ)\n  (tc_1 : n % 2 = 1)\n  (l1 : ∃ k : ℤ, n = 2 * k + 1)\n  (l2 : ∃ k : ℤ, n^2 = 4 * k^2 + 4 * k + 1) :\n  ∃ k : ℤ, n^2 = 4 * k * (k + 1) + 1 := by\n  obtain ⟨k, hk⟩ := l2\n  use k\n  rw [hk]\n  ring",
+      "artifact_urls": [
+        "https://arxiv.org/pdf/2510.15981v1",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/data/benchmark_0409.json",
+        "https://raw.githubusercontent.com/Huawei-AI4Math/ProofFlow/97f1b7be82380733fb0380973c164e40645ae9da/benchmark_results/output_pickle/benckmark6%20-%20think%20noDAG/dummy_6.json.pickle.html",
+        "https://raw.githubusercontent.com/Huawei-AI4Math/ProofFlow/97f1b7be82380733fb0380973c164e40645ae9da/benchmark_results/output_pickle/benckmark5%20-%20no%20think%20noDAG/dummy_6.json.pickle.html",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/LICENSE"
+      ],
+      "reported_model": "Paper Section 6.1: thinking ProofFlow uses Goedel-Formalizer-2 32B and Goedel-Prover-V2 32B; non-thinking uses an anonymized fast-response formalizer and DeepSeek-Prover-V2 671B. Model attribution of the illustrated Figure 7 run is not explicit; the two exports are selected by their released folder names.",
+      "reported_outcome": "Paper reports noDAG reuses L1 to prove L3 and makes L2 redundant. Both inspected released noDAG l3 records instead explicitly consume l2 and record lean_pass=true and lean_verify=true. These are publisher-recorded statuses; the paper illustration and released files have not been established as the identical run.",
+      "notes": "Local comparison only: the expansion-to-factorization transition visibly retains l2 in both inspected exports. Do not count as a whole-proof success, or as disproving the paper. Source graph node numbering differs between dataset, generated graphs, and paper figure; identify the transition by its mathematical text. Output versions and exact original messages are needed to resolve the reported bypass. Source packet: source-records.json; selected complete node records: selected-output-records.json.",
+      "finding": {
+        "finding_id": "FIND-0101",
+        "labels": [],
+        "content_fidelity": "preserved",
+        "argument_fidelity": "preserved",
+        "evidence_status": "disputed",
+        "observed_mismatch": "No local source-output mismatch established for the displayed expansion-to-factorization step. The published claim of bypassing L2 does not match either inspected released endpoint: thinking l3 assigns h₁ := l2; non-thinking l3 obtains its witness from l2.",
+        "consequence": "The unused-intermediate-lemma claim remains unresolved for the illustrated run. The inspected local endpoints provide comparison evidence of preserved dependency use and cannot support a confirmed faithfulness failure.",
+        "source_span": "nl_proof: 'Then $n^2 = (2k + 1)^2 = 4k^2 + 4k + 1$. We can factor this as $n^2 = 4k(k + 1) + 1$.'",
+        "lean_location": "Thinking noDAG nodeInfo.l3.solved_lemma.lean_code, theorem l3, lines 10 and 18; non-thinking noDAG same JSON path, lemma l3, obtain ⟨k, hk⟩ := l2.",
+        "first_observed_divergence": "unknown",
+        "evidence": "Direct inspection of exact released code shows use of l2 in both modes. Paper A.5.1 reports a different dependency. Local mathematical content and argument judgments apply only to this displayed transition; no dependency-closure analysis or compiler execution was performed.",
+        "uncertainties": [
+          "The Figure 7 run is not linked to an exact released export or timestamp.",
+          "Lean tactics may access other hypotheses as well; explicit l2 use is sufficient only to reject a simple claim that l2 is unused in these endpoints.",
+          "No generation or repair history was inspected."
+        ],
+        "causal_hypothesis": "unknown"
+      }
+    },
+    {
+      "input_kind": "original",
+      "source_validity": "valid",
+      "source_text_status": "exact_transcription",
+      "published_output_status": "excerpt",
+      "license_notes": "Repository excerpts: MIT License, Copyright (c) 2024 ProofFlow Team; notice retained in MIT-LICENSE.txt. Paper: Rafael Cabral, Tuan Manh Do, Xuejun Yu, Wai Ming Tai, Zijin Feng, Xin Shen, arXiv:2510.15981v1, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Paper summaries are collector paraphrases. Exact source fields and Lean snippets are copied from the pinned repository without corrections.",
+      "original_prompt_status": "unavailable",
+      "original_prompt": "unknown",
+      "reported_environment": "Paper Section 6.1 reports Lean v4.15.0 via LeanServer. Mathlib commit and environment identity for these HTML exports are unknown. Repository commit is 97f1b7be82380733fb0380973c164e40645ae9da. No local compilation or proof-completeness audit was performed.",
+      "reproduction_readiness": "needs_context",
+      "case_id": "CASE-0102",
+      "proof_family_id": "PF-dummy_9",
+      "source_locator": "arXiv:2510.15981v1 Appendix A.5.3, pp. 17-19; repository data/benchmark_0409.json origin=dummy,id=9; benchmark_results/output_pickle/benckmark5%20-%20no%20think%20noDAG/dummy_9.json.pickle.html, nodeInfo.tc_1.formalization and nodeInfo.l5.solved_lemma.",
+      "topic": "Arithmetic sequences and quantifier scope",
+      "case_kind": "candidate_failure",
+      "task_type": "proof_translation",
+      "source_validity_basis": "Statement and proof are valid for an ordinary arithmetic sequence indexed from 1 over the reals; collector inspected the common-difference calculation. The input does not intend the difference to vary by index pair. No Lean verification was performed.",
+      "source_text": "Theorem (exact nl_theorem field):\nIf $(a_n)$ is an arithmetic sequence with $a_1 = 5$ and $a_3 = 11$, then $a_5 = 17$.\n\nProof (exact nl_proof field):\nSince $(a_n)$ is arithmetic, there exists a common difference $d$ such that $a_n = a_1 + (n-1)d$ for all $n$. From the given information, $a_3 = a_1 + 2d$. Substituting the values: $11 = 5 + 2d$, which gives us $2d = 6$, so $d = 3$. Now we can find $a_5 = a_1 + 4d = 5 + 4(3) = 5 + 12 = 17$",
+      "published_output": "Exact released non-thinking noDAG tc_1.formalization.lean_code:\nimport Mathlib\nimport Aesop\n\nset_option maxHeartbeats 0\n\nopen BigOperators Real Nat Topology Rat Filter\n\nvariable (a : ℕ → ℝ)\n(tc_1 : ∀ n m, (n < m) → ∃ d, a m - a n = (m - n) * d)\n\nExact l5.solved_lemma.lean_code:\nimport Mathlib\nimport Aesop\n\nset_option maxHeartbeats 0\n\nopen BigOperators Real Nat Topology Rat Filter\n\nlemma l5\n  (a : ℕ → ℝ)\n  (tc_1 : ∀ n m, (n < m) → ∃ d, a m - a n = (m - n) * d)\n  (tc_2 : a 1 = 5 ∧ a 3 = 11)\n  (l1 : ∃ d, a 3 = a 1 + 2 * d)\n  (l2 : 11 = 5 + 2 * (Classical.choose l1))\n  (l3 : 2 * (Classical.choose l1) = 6)\n  (l4 : Classical.choose l1 = 3) :\n  a 5 = a 1 + 4 * (Classical.choose l1) := by\n  have hd : Classical.choose l1 = 3 := l4\n  rw [hd]\n  have ⟨d, h⟩ := tc_1 1 5 (by linarith)\n  have h₁ : d = 3 := by\n    have ⟨d', hd'⟩ := tc_1 1 3 (by linarith)\n    rw [tc_2.1, tc_2.2] at hd'\n    simp at hd'\n    rw [← hd'] at l4\n    exact l4.symm\n  rw [h₁] at h\n  simp at h\n  rw [h]\n  rw [tc_2.1]\n  ring",
+      "artifact_urls": [
+        "https://arxiv.org/pdf/2510.15981v1",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/data/benchmark_0409.json",
+        "https://raw.githubusercontent.com/Huawei-AI4Math/ProofFlow/97f1b7be82380733fb0380973c164e40645ae9da/benchmark_results/output_pickle/benckmark5%20-%20no%20think%20noDAG/dummy_9.json.pickle.html",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/LICENSE"
+      ],
+      "reported_model": "Paper Section 6.1 attributes non-thinking ProofFlow formalization to an anonymized fast-response proprietary model and tactic completion to DeepSeek-Prover-V2 671B. This export is in the non-thinking noDAG directory; exact model identifiers, versions and call metadata for this file are unknown.",
+      "reported_outcome": "The released tc_1 record reports lean_pass=true and semantic_score=1. Its automated feedback incorrectly calls the pair-dependent slope condition a precise arithmetic-sequence definition. Released l5 reports lean_pass=false, lean_verify=false and rewrite failures. These are recorded outcomes, not this collector's experimental results.",
+      "notes": "Candidate diagnosis from published output, not a specific mistranslation claimed in the paper's A.5.3 prose. The mathematical mismatch follows from the visible quantifier order, independently of prover failure. Preserve the scorer's positive assessment as evidence of a disagreement, not ground truth. See CASE-0104 for a separate thinking-mode dependency comparison in the same family. Exact original per-call messages and model deployment metadata are missing.",
+      "finding": {
+        "finding_id": "FIND-0102",
+        "labels": [
+          "ASSUMPTION",
+          "BINDING",
+          "INTERPRETATION"
+        ],
+        "content_fidelity": "violated",
+        "argument_fidelity": "uncertain",
+        "evidence_status": "candidate",
+        "observed_mismatch": "The source has one common difference d for the whole arithmetic sequence. The formalized condition is ∀ n m, n < m → ∃ d, a m - a n = (m - n) * d, allowing a different d for each index pair. The later l5 proof attempts to identify the independently obtained (1,5) and (1,3) slopes.",
+        "consequence": "This condition is satisfied by every real-valued sequence, since a slope can be chosen separately for every distinct pair. It cannot justify a5=17 from a1=5 and a3=11. For example, assigning a5=100 and arbitrary other terms satisfies the displayed pairwise condition but refutes the original target; this is a mathematical counterexample to equivalence, not a generated Lean proof.",
+        "source_span": "nl_theorem: 'arithmetic sequence'; nl_proof: 'there exists a common difference $d$ such that $a_n = a_1 + (n-1)d$ for all $n$'.",
+        "lean_location": "nodeInfo.tc_1.formalization.lean_code, variable declaration tc_1 (line 9); nodeInfo.l5.solved_lemma.lean_code, tc_1 binder and the separately obtained witnesses d and d'.",
+        "first_observed_divergence": "unknown",
+        "evidence": "Direct comparison of the exact source with the formalized quantifier order. The recorded l5 error includes tc_1 : ∀ (n m : ℕ), n < m → ∃ d, a m - a n = (↑m - ↑n) * d and a goal d = 3 after a different witness d' is obtained from tc_1 1 3. The failure label does not rely on compilation failure or the automated score.",
+        "uncertainties": [
+          "No independent compiler execution or full endpoint proof-closure audit.",
+          "Only the final tc_1 and l5 records were retained; generation and repair histories are not available in the HTML evidence.",
+          "The source leaves the numerical domain implicit; using real sequences is consistent with the released formalization and does not repair the quantifier drift."
+        ],
+        "causal_hypothesis": "unknown"
+      }
+    },
+    {
+      "input_kind": "original",
+      "source_validity": "valid",
+      "source_text_status": "exact_transcription",
+      "published_output_status": "excerpt",
+      "license_notes": "Repository excerpts: MIT License, Copyright (c) 2024 ProofFlow Team; notice retained in MIT-LICENSE.txt. Paper: Rafael Cabral, Tuan Manh Do, Xuejun Yu, Wai Ming Tai, Zijin Feng, Xin Shen, arXiv:2510.15981v1, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Paper summaries are collector paraphrases. Exact source fields and Lean snippets are copied from the pinned repository without corrections.",
+      "original_prompt_status": "unavailable",
+      "original_prompt": "unknown",
+      "reported_environment": "Paper Section 6.1 reports Lean v4.15.0 via LeanServer. Mathlib commit and environment identity for these HTML exports are unknown. Repository commit is 97f1b7be82380733fb0380973c164e40645ae9da. No local compilation or proof-completeness audit was performed.",
+      "reproduction_readiness": "needs_context",
+      "case_id": "CASE-0103",
+      "proof_family_id": "PF-dummy_7",
+      "source_locator": "arXiv:2510.15981v1 Appendix A.5.2, p. 17; data/benchmark_0409.json origin=dummy,id=7; benchmark_results/output_pickle/benckmark3%20-%20think%20DAG/dummy_7.json.pickle.html, nodeInfo.l3.",
+      "topic": "Probability, inclusion-exclusion, and preservation of intermediate statements",
+      "case_kind": "candidate_failure",
+      "task_type": "proof_translation",
+      "source_validity_basis": "The mathematical statement and proof are valid for two measurable events in a probability space; collector checked the inclusion-exclusion argument. The exact repository nl_theorem field has an unmatched final dollar delimiter, retained verbatim. That formatting defect is not the mathematical mistranslation diagnosed here.",
+      "source_text": "Theorem (exact nl_theorem field):\nIf $P(A) = 0.6$ and $P(B) = 0.7$, then $P(A \\cap B) \\geq 0.3\n\nProof (exact nl_proof field):\nWe know that $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$. Since $P(A \\cup B) \\leq 1$, we have $P(A) + P(B) - P(A \\cap B) \\leq 1$. Substituting the given values: $0.6 + 0.7 - P(A \\cap B) \\leq 1$, which gives $1.3 - P(A \\cap B) \\leq 1$. Therefore $P(A \\cap B) \\geq 0.3$.",
+      "published_output": "Exact released thinking DAG l3.statement:\nWe assume:\n• P(A ∪ B) = P(A) + P(B) - P(A ∩ B) [l1]\n• P(A ∪ B) ≤ 1 [l2].\nTherefore, we conclude:\n• P(A) + P(B) - P(A ∩ B) ≤ 1 [l3].\n\nExact l3.formalization.lean_code:\nimport Mathlib\nimport Aesop\n\nset_option maxHeartbeats 0\n\nopen BigOperators Real Nat Topology Rat\n\nopen BigOperators Real Nat Topology Rat Filter\n\ntheorem probability_bound \n  {Ω : Type*} [MeasurableSpace Ω] \n  (P : Set Ω → ℝ) \n  (A B : Set Ω)\n  (hP_nonneg : ∀ s, 0 ≤ P s)\n  (hP_le_one : ∀ s, P s ≤ 1)\n  (hP_empty : P ∅ = 0)\n  (hP_oneset : P Set.univ = 1)\n  (hP_A : P A = 0.6)\n  (hP_B : P B = 0.7) :\n  P (A ∩ B) ≥ 0.3 := by sorry\n\nExact l3.solved_lemma.error_msg:\n[\n  {\n    \"line\": 19,\n    \"column\": 35,\n    \"endLine\": 119,\n    \"endColumn\": 8,\n    \"data\": \"unsolved goals\\nΩ : Type u_1\\ninst✝ : MeasurableSpace Ω\\nP : Set Ω → ℝ\\nA B : Set Ω\\nhP_nonneg : ∀ (s : Set Ω), 0 ≤ P s\\nhP_le_one : ∀ (s : Set Ω), P s ≤ 1\\nhP_empty : P ∅ = 0\\nhP_oneset : P Set.univ = 1\\nh_union_bound : P (A ∪ B) ≤ 1\\nhP_A hP_B : True\\n⊢ 3 / 10 ≤ P (A ∩ B)\"\n  }\n]",
+      "artifact_urls": [
+        "https://arxiv.org/pdf/2510.15981v1",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/data/benchmark_0409.json",
+        "https://raw.githubusercontent.com/Huawei-AI4Math/ProofFlow/97f1b7be82380733fb0380973c164e40645ae9da/benchmark_results/output_pickle/benckmark3%20-%20think%20DAG/dummy_7.json.pickle.html",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/prompts/lemma_formalizer.md",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/LICENSE"
+      ],
+      "reported_model": "Paper Section 6.1 attributes thinking ProofFlow formalization to Goedel-Formalizer-2 32B and tactic completion to Goedel-Prover-V2 32B. This export is in the thinking DAG directory. Exact deployment revisions and the graph-builder identity for this run are unknown.",
+      "reported_outcome": "Released l3 formalization records lean_pass=true after one try, with a sorry scaffold. Its solver endpoint records lean_pass=false, lean_verify=false, tries=5 and an unsolved lower-bound goal. The repository scorer flags the omitted inclusion-exclusion premise and changed goal, and error_report classifies Formalizer. Paper A.5.2's favorable DAG description is not a guarantee that this released run is fully successful.",
+      "notes": "Candidate formalization mismatch inspected in a released output. The distinction between a syntactically accepted sorry scaffold and a completed theorem is explicit. Full published solver code and the automated diagnosis are retained in selected-output-records.json; the bundle excerpt includes the statement and recorded compiler feedback. This record does not infer invalidity from failed proof search.",
+      "finding": {
+        "finding_id": "FIND-0103",
+        "labels": [
+          "ASSUMPTION",
+          "CONCLUSION",
+          "DEPENDENCY"
+        ],
+        "content_fidelity": "violated",
+        "argument_fidelity": "violated",
+        "evidence_status": "candidate",
+        "observed_mismatch": "The source l3 derives P(A)+P(B)-P(A∩B)≤1 from the inclusion-exclusion equality and P(A∪B)≤1. Its formalization omits the equality and any additivity assumption, introduces numerical hypotheses, and replaces that intermediate target with P(A∩B)≥0.3.",
+        "consequence": "The replacement is not the requested proof step, and its stated assumptions are insufficient even for the new target. On a two-point space, take disjoint singleton A,B and a nonadditive set function with P(∅)=0, P(A)=0.6, P(B)=0.7, P(univ)=1. All displayed range and normalization hypotheses hold, while P(A∩B)=0 violates the target. This is a mathematical countermodel, not a Lean experiment.",
+        "source_span": "Released l3.statement explicitly lists P(A ∪ B) = P(A) + P(B) - P(A ∩ B) [l1] and P(A ∪ B) ≤ 1 [l2], then concludes P(A) + P(B) - P(A ∩ B) ≤ 1 [l3].",
+        "lean_location": "nodeInfo.l3.formalization.lean_code, theorem probability_bound, lines 10-20; omitted dependency is visible across its complete hypotheses at lines 14-19, and replaced target is line 20. nodeInfo.l3.solved_lemma.error_msg records the incomplete endpoint.",
+        "first_observed_divergence": "unknown",
+        "evidence": "Exact source/restatement versus complete formalized declaration supplies the mismatch. The released automated feedback independently names the same omissions but is not treated as confirmation. Recorded solver errors establish only publisher-reported noncompletion; the countermodel explains why the declared premises cannot support the new goal.",
+        "uncertainties": [
+          "No original per-step messages, repair history, model revision, or exact mathlib commit was inspected.",
+          "The artifact is a final node export, not an assembled theorem with audited dependencies.",
+          "The paper's illustrative run may differ from this export."
+        ],
+        "causal_hypothesis": "unknown"
+      }
+    },
+    {
+      "input_kind": "original",
+      "source_validity": "valid",
+      "source_text_status": "exact_transcription",
+      "published_output_status": "excerpt",
+      "license_notes": "Repository excerpts: MIT License, Copyright (c) 2024 ProofFlow Team; notice retained in MIT-LICENSE.txt. Paper: Rafael Cabral, Tuan Manh Do, Xuejun Yu, Wai Ming Tai, Zijin Feng, Xin Shen, arXiv:2510.15981v1, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Paper summaries are collector paraphrases. Exact source fields and Lean snippets are copied from the pinned repository without corrections.",
+      "original_prompt_status": "unavailable",
+      "original_prompt": "unknown",
+      "reported_environment": "Paper Section 6.1 reports Lean v4.15.0 via LeanServer. Mathlib commit and environment identity for these HTML exports are unknown. Repository commit is 97f1b7be82380733fb0380973c164e40645ae9da. No local compilation or proof-completeness audit was performed.",
+      "reproduction_readiness": "needs_context",
+      "case_id": "CASE-0104",
+      "proof_family_id": "PF-dummy_9",
+      "source_locator": "arXiv:2510.15981v1 Appendix A.5.3 and Figure 9, pp. 17-19; benchmark_results/output_pickle/benckmark6%20-%20think%20noDAG/dummy_9.json.pickle.html, nodeInfo.ts_1.solved_lemma and nodeInfo.ts_1.score.",
+      "topic": "Arithmetic sequences and intermediate-lemma reuse",
+      "case_kind": "comparison_nonfailure",
+      "task_type": "proof_translation",
+      "source_validity_basis": "Same valid mathematical source as CASE-0102. This is a related output comparison in PF-dummy_9, not an independent mathematical problem or frequency sample.",
+      "source_text": "Theorem (exact nl_theorem field):\nIf $(a_n)$ is an arithmetic sequence with $a_1 = 5$ and $a_3 = 11$, then $a_5 = 17$.\n\nProof (exact nl_proof field):\nSince $(a_n)$ is arithmetic, there exists a common difference $d$ such that $a_n = a_1 + (n-1)d$ for all $n$. From the given information, $a_3 = a_1 + 2d$. Substituting the values: $11 = 5 + 2d$, which gives us $2d = 6$, so $d = 3$. Now we can find $a_5 = a_1 + 4d = 5 + 4(3) = 5 + 12 = 17$",
+      "published_output": "Exact released thinking noDAG ts_1.solved_lemma.lean_code:\nimport Mathlib\nimport Aesop\nset_option maxHeartbeats 0\nopen BigOperators Real Nat Topology Rat Filter\n\ntheorem ts_1 \n  (a : ℕ → ℝ) \n  (d : ℝ)\n  (tc_1 : ∀ n : ℕ, a (n + 1) = a n + d) \n  (tc_2 : a 1 = 5 ∧ a 3 = 11) \n  (def_1 : ∀ n : ℕ, a n = a 1 + (n - 1) * d) \n  (l1 : a 3 = a 1 + 2 * d) \n  (l2 : 11 = 5 + 2 * d) \n  (l3 : 2 * d = 6) \n  (l4 : d = 3) \n  (l5 : a 5 = a 1 + 4 * d) \n  : a 5 = 17 := by\n  have h_d_eq_3 : d = 3 := by\n    have h₁ : (2 : ℝ) * d = 6 := by\n      exact_mod_cast l3\n    have h₂ : d = 3 := by\n      linarith\n    exact h₂\n  \n  have h_a5_eq_17 : a 5 = 17 := by\n    have h₁ : a 5 = a 1 + 4 * d := l5\n    have h₂ : a 1 = 5 := tc_2.1\n    have h₃ : d = 3 := h_d_eq_3\n    rw [h₁, h₂, h₃]\n    norm_num\n    <;>\n    (try ring_nf at *)\n    <;>\n    (try norm_num at *)\n    <;>\n    (try linarith)\n  \n  exact h_a5_eq_17",
+      "artifact_urls": [
+        "https://arxiv.org/pdf/2510.15981v1",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/data/benchmark_0409.json",
+        "https://raw.githubusercontent.com/Huawei-AI4Math/ProofFlow/97f1b7be82380733fb0380973c164e40645ae9da/benchmark_results/output_pickle/benckmark6%20-%20think%20noDAG/dummy_9.json.pickle.html",
+        "https://github.com/Huawei-AI4Math/ProofFlow/blob/97f1b7be82380733fb0380973c164e40645ae9da/LICENSE"
+      ],
+      "reported_model": "Paper Section 6.1: thinking ProofFlow uses Goedel-Formalizer-2 32B and Goedel-Prover-V2 32B. Released benchmark_think_noDAG.py names google/gemini-2.5-pro for graph construction, but current script settings do not establish exact metadata of this saved export.",
+      "reported_outcome": "Paper Figure 9 reports a final step using TC1, TC2 and L5 while bypassing L1-L4. The inspected thinking noDAG endpoint explicitly uses l3 to recover d=3, followed by l5 and tc_2. The released endpoint reports lean_pass=true, lean_verify=true; its automated score is 0 with a wrong-dependencies remark. No independent verification was performed.",
+      "notes": "Comparison is scoped to the claimed wholesale bypass of L1-L4. The visible code uses l3 and recomputes the short division step represented by l4. Unused l4 alone does not establish an argument violation under this study's allowance for justified local elaboration. Whole-proof content/completeness remains unaudited; tc_1 and def_1 use different forms of the sequence assumption. Do not count this comparison as a fully validated successful proof or as disproving the paper.",
+      "finding": {
+        "finding_id": "FIND-0104",
+        "labels": [],
+        "content_fidelity": "uncertain",
+        "argument_fidelity": "uncertain",
+        "evidence_status": "disputed",
+        "observed_mismatch": "The released endpoint does not exhibit the paper's specific TC1/TC2/L5-only dependency pattern: it explicitly consumes l3. It leaves l4 unused while deriving the same d=3 equation locally from 2*d=6.",
+        "consequence": "The paper's illustrated wholesale intermediate-bypass mechanism has not been matched to this output. A possible local inlining of L4 remains distinguishable from substantive replacement of the supplied argument. No faithfulness failure is assigned solely for an unused lemma name.",
+        "source_span": "nl_proof: 'which gives us $2d = 6$, so $d = 3$' and '$a_5 = a_1 + 4d = 5 + 4(3) = 5 + 12 = 17$'.",
+        "lean_location": "nodeInfo.ts_1.solved_lemma.lean_code, theorem ts_1, lines 18-23 derive d=3 via exact_mod_cast l3; lines 25-29 use l5 and tc_2.1 to conclude a5=17.",
+        "first_observed_divergence": "unknown",
+        "evidence": "Direct code inspection of the complete final lemma, compared with the original source and paper's Figure 9 claim. The artifact records a wrong-dependencies score, but that automated judgment does not distinguish local inlining from essential reasoning loss under this study's rubric.",
+        "uncertainties": [
+          "The paper's illustrated run is not uniquely linked to this released endpoint.",
+          "Tactic source does not provide a checked proof-term dependency closure.",
+          "Full code context, source-to-output assembly, and harmless versus substantive inlining need further review."
+        ],
+        "causal_hypothesis": "unknown"
+      }
+    }
+  ]
+}

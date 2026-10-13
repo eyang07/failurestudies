@@ -1,0 +1,2 @@
+# Preserve whitespace in exact published excerpts; do not treat it as our code style.
+cases/*/published_output.md -whitespace

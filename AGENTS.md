@@ -3,6 +3,7 @@
 ## Mission and Scope
 - Read `STUDY_PLAN.md` and the assigned protocol before work. Diagnose failures before proposing a general solution. Do not train models or build a new proof language/framework.
 - Execute only the assigned phase and cases. Setup or literature inspection does not authorize bulk model runs, paid experiments, interventions, or autonomous subagent spawning.
+- For explicitly authorized archival collection, follow `protocols/archival-v1/PROTOCOL.md` and the assigned role in `instructions/`. The reusable launch prompt is `prompts/COLLECT_CASE_STUDIES.md`. Parallel collectors own separate import bundles; only the coordinator updates shared registers.
 - Before generation, require a frozen protocol specifying source IDs/hashes, condition prompts, model/settings, environment, sampling, budgets, repair policy, and evaluation rubric. Report missing prerequisites; do not invent the original model or prompt.
 
 ## Source and Baseline Integrity
